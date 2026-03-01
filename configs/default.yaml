@@ -1,0 +1,29 @@
+# Default configuration for unified-llm
+#
+# All cloud providers use the LiteLLM backend, which reads API keys from
+# standard environment variables (OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.).
+#
+# Environment variable syntax:
+#   ${VAR}            — required, errors if unset
+#   ${VAR:-default}   — uses "default" when VAR is unset
+
+defaults:
+  temperature: 0.7
+  max_tokens: 1024
+
+providers:
+  openai:
+    default_model: gpt-4o
+
+  anthropic:
+    default_model: claude-sonnet-4-20250514
+
+  ollama:
+    api_base: ${OLLAMA_HOST:-http://localhost:11434}
+    default_model: llama3.1
+
+  # Example: OpenAI-compatible local server (vLLM, LM Studio, etc.)
+  # local_vllm:
+  #   type: openai
+  #   api_base: http://localhost:8000/v1
+  #   api_key: not-needed

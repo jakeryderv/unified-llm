@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "unified-llm"
+version = "0.1.0"
+description = "One interface to rule them all — call any LLM through a single, consistent API."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.0",
+    "litellm>=1.40",
+]
+
+[project.optional-dependencies]
+local = [
+    "transformers>=4.40",
+    "torch>=2.0",
+    "accelerate>=0.30",
+    "bitsandbytes>=0.43",
+    "peft>=0.10",
+]
+cli = ["click>=8.0"]
+benchmark = [
+    "lm-eval>=0.4.6",
+    "lm-eval[math]>=0.4.6",
+    "lm-eval[ifeval]>=0.4.6",
+]
+all = [
+    "unified-llm[local]",
+    "unified-llm[cli]",
+    "unified-llm[benchmark]",
+]
+
+[project.scripts]
+ullm = "unified_llm.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "mypy>=1.10",
+    "ruff>=0.4",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["unified_llm"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
