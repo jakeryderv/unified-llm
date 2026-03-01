@@ -62,7 +62,7 @@ class GenerationConfig(BaseModel):
     """Provider-agnostic generation parameters."""
     temperature: float = 0.7
     max_tokens: int = 1024
-    top_p: float = 1.0
+    top_p: float | None = None
     top_k: int | None = None
     stop_sequences: list[str] = Field(default_factory=list)
     frequency_penalty: float = 0.0

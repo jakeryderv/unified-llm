@@ -81,13 +81,14 @@ class LiteLLMProvider(BaseProvider):
             "model": self._litellm_model(model),
             "temperature": config.temperature,
             "max_tokens": config.max_tokens,
-            "top_p": config.top_p,
             "frequency_penalty": config.frequency_penalty,
             "presence_penalty": config.presence_penalty,
             "stop": config.stop_sequences or None,
             "seed": config.seed,
             "drop_params": True,
         }
+        if config.top_p is not None:
+            kwargs["top_p"] = config.top_p
         if self._api_key:
             kwargs["api_key"] = self._api_key
         if self._api_base:
